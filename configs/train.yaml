@@ -1,0 +1,50 @@
+# Training config for the mmqa ViLT VQA core. Override the defaults in src/mmqa/config.py.
+# Paths come from env vars (MMQA_ARTIFACTS_DIR / _MODEL_DIR / _RUN_DIR / HF_HOME).
+project_title: Multimodal Question Answering (VQA) System
+author: Le Dinh Minh Quan
+student_id: "23127460"
+
+data:
+  vqa_dataset: HuggingFaceM4/VQAv2      # TRAIN mirror (10 annotators; needs trust_remote_code)
+  trust_remote_code: true
+  vqa_eval_dataset: lmms-lab/VQAv2      # EVAL (CC-BY-4.0 clean parquet)
+  vqa_eval_split: validation
+  small_dataset: merve/vqav2-small
+  use_hf: true
+  max_train_samples: 40000
+  max_eval_samples: 4000
+  synth_eval_scenes: 120
+  image_size: 384
+  max_shapes: 4
+  seed: 42
+
+model:
+  base_model: dandelin/vilt-b32-finetuned-vqa   # Apache, classification over ~3129 answers
+  model_type: vilt
+  image_size: 384
+  max_question_length: 40
+  num_answers: 3129
+  top_k: 5
+  num_train_epochs: 4
+  learning_rate: 5.0e-5
+  per_device_train_batch_size: 16
+  per_device_eval_batch_size: 32
+  gradient_accumulation_steps: 1
+  warmup_ratio: 0.1
+  early_stopping_patience: 3
+  bf16: true
+  fp16: false
+  tf32: true
+  gradient_checkpointing: false
+  eval_steps: 500
+  save_steps: 500
+  seed: 42
+
+agent:
+  min_question_chars: 3
+  abstain_enabled: true
+  confidence_min: 0.20
+  entropy_max: 2.5
+  margin_min: 0.03
+  type_consistency_enabled: true
+  llm_fallback_enabled: false

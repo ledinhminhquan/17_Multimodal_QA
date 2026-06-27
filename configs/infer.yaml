@@ -1,0 +1,27 @@
+# Inference / serving config for mmqa. Used by `mmqa serve` and the API
+# (set MMQA_INFER_CONFIG to this file).
+project_title: Multimodal Question Answering (VQA) System
+author: Le Dinh Minh Quan
+student_id: "23127460"
+
+model:
+  base_model: dandelin/vilt-b32-finetuned-vqa
+  model_type: vilt
+  max_question_length: 40
+  top_k: 5
+
+agent:
+  min_question_chars: 3
+  abstain_enabled: true
+  confidence_min: 0.20
+  entropy_max: 2.5
+  margin_min: 0.03
+  type_consistency_enabled: true
+  llm_fallback_enabled: false           # optional LLM brain OFF by default (zero paid API calls)
+
+serving:
+  model_version: v1
+  api_title: Multimodal Question Answering (VQA) API
+  api_version: 1.0.0
+  log_jobs: true
+  max_file_mb: 15

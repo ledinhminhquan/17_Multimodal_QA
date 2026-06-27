@@ -1,0 +1,55 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mmqa"
+version = "1.0.0"
+description = "Multimodal Question Answering (VQA) — answer a natural-language question about an image with a trainable ViLT core, orchestrated by a deterministic agent (D1-D5) that classifies the question, abstains when uncertain, and constrains the answer to the question type"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Le Dinh Minh Quan" }]
+keywords = ["nlp", "vqa", "visual-question-answering", "multimodal", "vilt", "blip",
+            "abstention", "calibration", "agent"]
+
+# Core deps only — the package, the SceneStubVQA offline model, the synthetic-scene
+# generator, the question-type classifier, the VQA-accuracy metric, the agent and the tests
+# all run with just these (no torch). Heavy ML / serving / report libs are extras, lazy-imported.
+dependencies = [
+    "numpy>=1.23",
+    "pyyaml>=6.0",
+    "pydantic>=2.0",
+    "Pillow>=9.5",
+]
+
+[project.optional-dependencies]
+ml = ["torch>=2.1", "transformers>=4.40", "datasets>=2.18", "accelerate>=0.30", "sentencepiece>=0.1.99"]
+api = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "gradio>=4.0", "python-multipart>=0.0.9"]
+report = ["reportlab>=4.0", "python-pptx>=0.6.23", "matplotlib>=3.7"]
+dev = ["pytest>=7.4", "ruff>=0.4"]
+all = [
+    "torch>=2.1", "transformers>=4.40", "datasets>=2.18", "accelerate>=0.30", "sentencepiece>=0.1.99",
+    "fastapi>=0.110", "uvicorn[standard]>=0.29", "gradio>=4.0", "python-multipart>=0.0.9",
+    "reportlab>=4.0", "python-pptx>=0.6.23", "matplotlib>=3.7",
+]
+
+[project.scripts]
+mmqa = "mmqa.cli:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+mmqa = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"

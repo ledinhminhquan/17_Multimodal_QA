@@ -1,0 +1,15 @@
+services:
+  mmqa:
+    build: .
+    image: mmqa:latest
+    ports:
+      - "8000:8000"
+    environment:
+      - MMQA_ARTIFACTS_DIR=/app/artifacts
+      - HF_HOME=/app/hf_cache
+      # - MMQA_INFER_CONFIG=/app/configs/infer.yaml
+      # - MMQA_LLM_API_KEY=...   # optional LLM brain (off by default)
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./hf_cache:/app/hf_cache
+    command: uvicorn mmqa.api.app_combined:app --host 0.0.0.0 --port 8000
