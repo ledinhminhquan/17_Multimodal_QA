@@ -40,7 +40,7 @@ cells.append(md(
 
 cells.append(code(
     "#@title 0) Controls - set these, then `Runtime -> Run all`  { display-mode: \"form\" }\n",
-    "GIT_REPO_URL = \"https://github.com/<your-username>/mmqa\"  #@param {type:\"string\"}\n",
+    "GIT_REPO_URL = \"https://github.com/ledinhminhquan/mmqa\"  #@param {type:\"string\"}\n",
     "GIT_BRANCH   = \"main\"  #@param {type:\"string\"}\n",
     "USE_DRIVE    = True     #@param {type:\"boolean\"}\n",
     "DRIVE_SUBDIR = \"mmqa\"  #@param {type:\"string\"}\n",
@@ -87,7 +87,7 @@ cells.append(code(
     "os.chdir('/content')\n",
     "if os.path.isdir('/content/mmqa'):\n",
     "    os.chdir('/content/mmqa'); os.system('git pull')\n",
-    "elif GIT_REPO_URL and '<your-username>' not in GIT_REPO_URL:\n",
+    "elif GIT_REPO_URL and 'ledinhminhquan' not in GIT_REPO_URL:\n",
     "    os.system(f'git clone -b {GIT_BRANCH} {GIT_REPO_URL} /content/mmqa'); os.chdir('/content/mmqa')\n",
     "else:\n",
     "    drive_src = f'/content/drive/MyDrive/{DRIVE_SUBDIR}/mmqa'\n",
